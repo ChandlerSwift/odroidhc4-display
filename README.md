@@ -7,18 +7,12 @@ the `odroid-homecloud-display` (the base install requires pillow, which has some
 native dependencies; the install of the examples requires pygame and all its
 dependencies as well).
 
-### Building
-To cross-compile:
-```sh
-GOARCH=arm64 GOOS=linux go build
-```
-
 ### Installing
 ```sh
 # from source
 git clone git@github.com:ChandlerSwift/odroidhc4-display.git
 cd odroidhc4-display
-go build # if not built elsewhere; you can also cross-compile as shown above
+go build # if not built elsewhere; you can also cross-compile with GOOS=linux GOARCH=arm64
 sudo cp odroidhc4-display /usr/bin/
 sudo cp odroidhc4-display.service /etc/systemd/system/
 sudo systemctl daemon-reload
