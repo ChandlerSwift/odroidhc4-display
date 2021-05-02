@@ -53,7 +53,7 @@ func main() {
 		t := <-ticker.C
 		lines := []string{
 			"ODROID-HC4 status",
-			t.Format("Mon Jan 2 3:04:05P"),
+			t.Format("Jan 2 3:04:05 PM"),
 		}
 		// Reset canvas
 		img := image1bit.NewVerticalLSB(dev.Bounds())
