@@ -53,7 +53,7 @@ func getMemString() string {
 func getCPUString() string {
 	v, _ := cpu.Percent(0, false)
 	l, _ := load.Avg()
-	// Unfortunately, the screen just isn't wide enough for a Load15
+	// Unfortunately, the screen just isn't wide enough to include Load15
 	return fmt.Sprintf("CPU: %.f%% (%.1f %.1f)", v[0], l.Load1, l.Load5)
 }
 
@@ -76,6 +76,7 @@ func getHDDString() string {
 
 func getIPAddrString() string {
 	// https://stackoverflow.com/a/37382208/3814663
+	// Note that since this is UDP, no connection is actually established.
 	conn, err := net.Dial("udp", "8.8.8.8:80")
 	if err != nil {
 		log.Fatal(err)
@@ -112,7 +113,6 @@ func main() {
 	}
 
 	f := basicfont.Face7x13
-	// Draw on it.
 	drawer := font.Drawer{
 		Src:  &image.Uniform{image1bit.On},
 		Face: f,
@@ -131,8 +131,8 @@ func main() {
 			getMemString(),
 			getHDDString(),
 		}
-		// Reset canvas
-		img := image1bit.NewVerticalLSB(dev.Bounds())
+
+		img := image1bit.NewVerticalLSB(dev.Bounds()) // reset canvas per frame
 		drawer.Dst = img
 		for i, s := range lines {
 			drawer.Dot = fixed.P(0, (f.Height-1)*(i+1))
