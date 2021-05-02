@@ -61,17 +61,17 @@ func getCPUString() string {
 func getHDDString() string {
 	partitions, _ := disk.Partitions(false)
 	biggestDiskSize := uint64(0)
-	biggestDiskFree := uint64(0)
+	biggestDiskUsed := uint64(0)
 	biggestDiskName := ""
 	for _, partition := range partitions {
 		d, _ := disk.Usage(partition.Mountpoint)
 		if d.Total > biggestDiskSize {
 			biggestDiskName = partition.Mountpoint
-			biggestDiskFree = d.Free
+			biggestDiskUsed = d.Used
 			biggestDiskSize = d.Total
 		}
 	}
-	return fmt.Sprintf("%v: %v/%v", biggestDiskName, formatSize(biggestDiskFree, 1000), formatSize(biggestDiskSize, 1000))
+	return fmt.Sprintf("%v: %v/%v", biggestDiskName, formatSize(biggestDiskUsed, 1000), formatSize(biggestDiskSize, 1000))
 }
 
 func getIPAddrString() string {
