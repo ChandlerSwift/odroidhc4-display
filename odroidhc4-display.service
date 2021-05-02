@@ -1,0 +1,6 @@
+[Unit]
+Description=ODROID-HC4 Display daemon
+[Service]
+ExecStart=/usr/bin/odroidhc4-display
+[Install]
+WantedBy=multi-user.target

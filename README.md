@@ -11,3 +11,16 @@ dependencies as well).
 To cross-compile:
 ```sh
 GOARCH=arm64 GOOS=linux go build
+```
+
+### Installing
+```sh
+git clone git@github.com:ChandlerSwift/odroidhc4-display.git
+cd odroidhc4-display
+go build # if not built elsewhere; you can also cross-compile as shown above
+sudo cp odroidhc4-display /usr/bin/
+sudo cp odroidhc4-display.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now odroidhc4-display
+```
+
