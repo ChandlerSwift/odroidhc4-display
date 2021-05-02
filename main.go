@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"image"
 	"log"
-	"strings"
 	"time"
 
 	"golang.org/x/image/font"
@@ -41,24 +39,27 @@ func main() {
 		log.Fatalf("failed to initialize ssd1306: %v", err)
 	}
 
+	f := basicfont.Face7x13
+	// Draw on it.
+	drawer := font.Drawer{
+		Src:  &image.Uniform{image1bit.On},
+		Face: f,
+		Dot:  fixed.P(0, f.Height),
+	}
+
 	ticker := time.NewTicker(time.Second)
 	defer ticker.Stop()
 	for {
 		t := <-ticker.C
-		// Draw on it.
-		img := image1bit.NewVerticalLSB(dev.Bounds())
-
-		f := basicfont.Face7x13
-		drawer := font.Drawer{
-			Dst:  img,
-			Src:  &image.Uniform{image1bit.On},
-			Face: f,
-			Dot:  fixed.P(0, f.Height),
+		lines := []string{
+			"ODROID-HC4 status",
+			t.Format("Mon Jan 2 3:04:05P"),
 		}
-
-		msg := fmt.Sprintf("Hello from periph!\n%vasdf\nasdf\nasdf", t)
-		for i, s := range strings.Split(msg, "\n") {
-			drawer.Dot = fixed.P(0, f.Height*(i+1))
+		// Reset canvas
+		img := image1bit.NewVerticalLSB(dev.Bounds())
+		drawer.Dst = img
+		for i, s := range lines {
+			drawer.Dot = fixed.P(0, (f.Height-1)*(i+1))
 			drawer.DrawString(s)
 		}
 
