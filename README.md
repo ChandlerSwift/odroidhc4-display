@@ -25,3 +25,20 @@ sudo curl -Lo /etc/systemd/system/odroidhc4-display.service https://raw.githubus
 sudo systemctl daemon-reload
 sudo systemctl enable --now odroidhc4-display
 ```
+### Sample output
+Output includes:
+ * Date and time
+ * IP address, if any
+ * CPU usage, 1 and 5 minute load averages
+ * Memory usage
+ * Disk usage of largest attached partition (this is assumed to be the disk pool)
+
+```
+May 2 3:47:42 PM
+IP: 192.168.1.168
+CPU: 0% (0.1 0.1)
+MEM: 175M/3.7G
+/mnt: 957G/3.9T
+```
+
+![sample output](https://user-images.githubusercontent.com/8261698/116829719-fb8ae900-ab6a-11eb-938a-c37cca1fc46e.jpg)
