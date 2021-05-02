@@ -79,7 +79,7 @@ func getIPAddrString() string {
 	// Note that since this is UDP, no connection is actually established.
 	conn, err := net.Dial("udp", "8.8.8.8:80")
 	if err != nil {
-		log.Fatal(err)
+		return "IP: Network down"
 	}
 	defer conn.Close()
 
