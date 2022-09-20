@@ -1,5 +1,10 @@
 # odroidhc4-display
 
+**Warning!** These displays do suffer from burn-in over time. I'm unable to find
+a spec for the rated lifetime of these, but it was noticeable after a few months
+of continuous use, and has grown pretty severe over a roughly 16 months of use.
+See images below.
+
 odroidhc4-display is a package to provide basic helpful output for the
 [OLED display on the ODROID-HC4](https://wiki.odroid.com/odroid-hc4/application_note/oled).
 It's intended to be a no-dependencies-required download-and-run alternative for
@@ -41,4 +46,7 @@ MEM: 175M/3.7G
 /mnt: 957G/3.9T
 ```
 
-![sample output](https://user-images.githubusercontent.com/8261698/116829719-fb8ae900-ab6a-11eb-938a-c37cca1fc46e.jpg)
+![sample output](when-new.jpeg)
+
+Displaying a fully white background after about 16 months of use:
+![with burn-in](with-burn-in.jpeg)
