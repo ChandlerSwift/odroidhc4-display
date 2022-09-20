@@ -50,3 +50,54 @@ MEM: 175M/3.7G
 
 Displaying a fully white background after about 16 months of use:
 ![with burn-in](with-burn-in.jpeg)
+
+<details>
+<summary>Go code to display a fully-white screen</summary>
+
+```go
+package main
+
+import (
+	"image"
+	"log"
+
+	"periph.io/x/periph/conn/i2c/i2creg"
+	"periph.io/x/periph/devices/ssd1306"
+	"periph.io/x/periph/devices/ssd1306/image1bit"
+	"periph.io/x/periph/host"
+)
+
+func main() {
+	// Make sure periph is initialized.
+	if _, err := host.Init(); err != nil {
+		log.Fatal(err)
+	}
+
+	// Use i2creg I²C bus registry to find the first available I²C bus.
+	b, err := i2creg.Open("")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer b.Close()
+
+	dev, err := ssd1306.NewI2C(b, &ssd1306.Opts{
+		W:             128,
+		H:             64,
+		Rotated:       true,
+		Sequential:    false,
+		SwapTopBottom: false,
+	})
+	if err != nil {
+		log.Fatalf("failed to initialize ssd1306: %v", err)
+	}
+
+	img := &image.Uniform{image1bit.On}
+
+	if err := dev.Draw(dev.Bounds(), img, image.Point{}); err != nil {
+		log.Fatal(err)
+	}
+
+}
+```
+
+</details>
